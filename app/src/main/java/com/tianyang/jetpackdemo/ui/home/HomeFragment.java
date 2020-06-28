@@ -1,32 +1,28 @@
 package com.tianyang.jetpackdemo.ui.home;
 
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.tianyang.jetpackdemo.R;
+import com.tianyang.jetpackdemo.base.BaseFragment;
 import com.tianyang.jetpackdemo.databinding.FragmentHomeBinding;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends BaseFragment<FragmentHomeBinding> {
 
     private HomeViewModel homeViewModel;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_home;
+    }
 
-        final FragmentHomeBinding binding =
-                DataBindingUtil.inflate(getLayoutInflater(), R.layout.fragment_home, null, false);
+    @Override
+    protected void initView() {
         homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
-        binding.setViewmodel(homeViewModel);
-        binding.setLifecycleOwner(this);
+        mBinding.setViewmodel(homeViewModel);
+        mBinding.setLifecycleOwner(this);
 
         TextWatcher afterTextChangedListener = new TextWatcher() {
             @Override
@@ -45,8 +41,7 @@ public class HomeFragment extends Fragment {
             }
         };
 
-        binding.username.addTextChangedListener(afterTextChangedListener);
-        binding.password.addTextChangedListener(afterTextChangedListener);
-        return binding.getRoot();
+        mBinding.username.addTextChangedListener(afterTextChangedListener);
+        mBinding.password.addTextChangedListener(afterTextChangedListener);
     }
 }
