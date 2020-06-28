@@ -6,18 +6,28 @@ import androidx.lifecycle.ViewModel;
 
 public class HomeViewModel extends ViewModel {
 
-    private MutableLiveData<String> mText;
-
-    public HomeViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("");
-    }
-
-    public void loginDataChanged(String username, String password) {
-        mText.setValue(username + " " + password);
-    }
+    MutableLiveData<String> email = new MutableLiveData<>("aa");
+    MutableLiveData<String> password = new MutableLiveData<>();
+    MutableLiveData<String> text = new MutableLiveData<>();
 
     public LiveData<String> getText() {
-        return mText;
+        return text;
     }
+
+    public MutableLiveData<String> getEmail() {
+        return email;
+    }
+
+    public MutableLiveData<String> getPassword() {
+        return password;
+    }
+
+    public HomeViewModel() {
+        text.setValue("");
+    }
+
+    public void loginDataChanged() {
+        text.setValue(email.getValue() + " " + password.getValue());
+    }
+
 }

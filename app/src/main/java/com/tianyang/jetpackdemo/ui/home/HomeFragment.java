@@ -3,20 +3,17 @@ package com.tianyang.jetpackdemo.ui.home;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.tianyang.jetpackdemo.R;
+import com.tianyang.jetpackdemo.databinding.FragmentHomeBinding;
 
 public class HomeFragment extends Fragment {
 
@@ -24,25 +21,12 @@ public class HomeFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        Log.d("HomeFragment", "onCreateView....");
 
-
-        homeViewModel =
-                ViewModelProviders.of(this).get(HomeViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
-
-        final EditText usernameEditText = root.findViewById(R.id.username);
-        final EditText passwordEditText = root.findViewById(R.id.password);
-        final TextView textView = root.findViewById(R.id.text_home);
-
-
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
-
+        final FragmentHomeBinding binding =
+                DataBindingUtil.inflate(getLayoutInflater(), R.layout.fragment_home, null, false);
+        homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
+        binding.setViewmodel(homeViewModel);
+        binding.setLifecycleOwner(this);
 
         TextWatcher afterTextChangedListener = new TextWatcher() {
             @Override
@@ -57,13 +41,12 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                homeViewModel.loginDataChanged(usernameEditText.getText().toString(),
-                        passwordEditText.getText().toString());
+                homeViewModel.loginDataChanged();
             }
         };
 
-        usernameEditText.addTextChangedListener(afterTextChangedListener);
-        passwordEditText.addTextChangedListener(afterTextChangedListener);
-        return root;
+        binding.username.addTextChangedListener(afterTextChangedListener);
+        binding.password.addTextChangedListener(afterTextChangedListener);
+        return binding.getRoot();
     }
 }
