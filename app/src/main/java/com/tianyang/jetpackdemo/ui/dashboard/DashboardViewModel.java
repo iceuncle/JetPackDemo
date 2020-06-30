@@ -7,20 +7,17 @@ import androidx.paging.DataSource;
 import androidx.paging.ItemKeyedDataSource;
 import androidx.paging.PageKeyedDataSource;
 
-import com.tianyang.jetpackdemo.model.Article;
-import com.tianyang.jetpackdemo.model.BaseResponse;
-import com.tianyang.jetpackdemo.model.PageData;
 import com.tianyang.jetpackdemo.api.NetApi;
 import com.tianyang.jetpackdemo.api.NetClient;
 import com.tianyang.jetpackdemo.base.PageViewModel;
+import com.tianyang.jetpackdemo.model.Article;
+import com.tianyang.jetpackdemo.model.BaseResponse;
+import com.tianyang.jetpackdemo.model.PageData;
 
-import java.util.ArrayList;
 import java.util.Collections;
 
 import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 public class DashboardViewModel extends PageViewModel<Article> {
 
@@ -55,8 +52,6 @@ public class DashboardViewModel extends PageViewModel<Article> {
         Log.d("http", "page..." + page);
         NetClient.create(NetApi.class)
                 .getArticles(String.valueOf(page))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<BaseResponse<PageData<Article>>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
@@ -65,10 +60,10 @@ public class DashboardViewModel extends PageViewModel<Article> {
 
                     @Override
                     public void onNext(BaseResponse<PageData<Article>> pageDataBaseResponse) {
-                        if (page == 5) {
-                            //模拟第一次加载没有数据
-                            pageDataBaseResponse.data.datas = new ArrayList<>();
-                        }
+//                        if (page == 0) {
+//                            //模拟第一次加载没有数据
+//                            pageDataBaseResponse.data.datas = new ArrayList<>();
+//                        }
                         if (initialCallback != null) {
                             initialCallback.onResult(pageDataBaseResponse.data.datas, -1, 0);
                         } else {

@@ -4,7 +4,6 @@ import android.util.Log;
 import android.view.View;
 
 import androidx.databinding.ViewDataBinding;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.paging.PagedList;
 import androidx.paging.PagedListAdapter;
@@ -73,7 +72,7 @@ public abstract class PageFragment<T, M extends PageViewModel<T>, VB extends Vie
             mViewModel = (M) ViewModelProviders.of(this).get(modelClaz);
 
             //触发页面初始化数据加载的逻辑
-            mViewModel.getPageData().observe(this, result -> submitList(result));
+            mViewModel.getPageData().observe(this, this::submitList);
 
             //监听分页时有无更多数据,以决定是否关闭上拉加载的动画
             mViewModel.getBoundaryPageData().observe(this, this::finishRefresh);
