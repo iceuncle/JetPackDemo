@@ -1,14 +1,22 @@
 package com.tianyang.jetpackdemo.ui.dashboard;
 
-import androidx.lifecycle.ViewModelProviders;
+import android.util.Log;
+import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.paging.PagedListAdapter;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.tianyang.jetpackdemo.R;
-import com.tianyang.jetpackdemo.base.BaseFragment;
+import com.tianyang.jetpackdemo.base.PageFragment;
 import com.tianyang.jetpackdemo.databinding.FragmentDashboardBinding;
+import com.tianyang.jetpackdemo.model.Article;
 
-public class DashboardFragment extends BaseFragment<FragmentDashboardBinding> {
+public class DashboardFragment extends PageFragment<Article, DashboardViewModel, FragmentDashboardBinding> {
 
-    private DashboardViewModel dashboardViewModel;
+
 
     @Override
     protected int getLayoutId() {
@@ -16,8 +24,34 @@ public class DashboardFragment extends BaseFragment<FragmentDashboardBinding> {
     }
 
     @Override
-    protected void initView() {
-        dashboardViewModel = ViewModelProviders.of(this).get(DashboardViewModel.class);
-        mBinding.setViewModel(dashboardViewModel);
+    protected void initDetailView() {
+        mBinding.setViewModel(mViewModel);
     }
+
+    @Override
+    protected RecyclerView provideRecyclerView() {
+        return mBinding.recyclerView;
+    }
+
+    @Override
+    protected SmartRefreshLayout provideRefreshLayout() {
+        return mBinding.refreshLayout;
+    }
+
+    @Override
+    protected View provideEmptyView() {
+        return mBinding.emptyView;
+    }
+
+    @Override
+    public PagedListAdapter getAdapter() {
+        return new ArticleAdapter();
+    }
+
+    @Override
+    public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+        Log.d("http", "onRefresh...");
+        mViewModel.getDataSource().invalidate();
+    }
+
 }
