@@ -12,6 +12,12 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
     }
 
     buildTypes {
@@ -25,7 +31,7 @@ android {
         sourceCompatibility "1.8"
         targetCompatibility "1.8"
     }
-    
+
     dataBinding {
         enabled true
     }
@@ -58,4 +64,9 @@ dependencies {
 
     //paging分页组件
     implementation 'androidx.paging:paging-runtime:2.1.0'
+
+    //room数据库
+    implementation "androidx.room:room-runtime:2.2.0"
+    annotationProcessor "androidx.room:room-compiler:2.2.0"
+    androidTestImplementation "androidx.room:room-testing:2.2.0"
 }

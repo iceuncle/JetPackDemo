@@ -1,4 +1,4 @@
-package com.tianyang.jetpackdemo.api.repository;
+package com.tianyang.jetpackdemo.repository;
 
 import com.tianyang.jetpackdemo.api.NetClient;
 import com.tianyang.jetpackdemo.api.NetService;

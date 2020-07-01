@@ -8,7 +8,7 @@ import androidx.paging.PageKeyedDataSource;
 import com.tianyang.jetpackdemo.api.BaseObserver;
 import com.tianyang.jetpackdemo.api.NetClient;
 import com.tianyang.jetpackdemo.api.NetService;
-import com.tianyang.jetpackdemo.api.repository.NetRepository;
+import com.tianyang.jetpackdemo.repository.NetRepository;
 import com.tianyang.jetpackdemo.base.PageViewModel;
 import com.tianyang.jetpackdemo.model.Article;
 import com.tianyang.jetpackdemo.model.BaseResponse;

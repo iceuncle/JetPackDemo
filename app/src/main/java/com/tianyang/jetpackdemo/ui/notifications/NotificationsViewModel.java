@@ -1,16 +1,29 @@
 package com.tianyang.jetpackdemo.ui.notifications;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.tianyang.jetpackdemo.base.BaseViewModel;
+import com.tianyang.jetpackdemo.database.entity.Article;
+import com.tianyang.jetpackdemo.repository.ArticleRepository;
+
+import java.util.List;
 
 public class NotificationsViewModel extends BaseViewModel {
 
-    private MutableLiveData<String> mText = new MutableLiveData<>("This is notifications fragment");
+    private LiveData<List<Article>> mAllArticles;
 
-    public LiveData<String> getText() {
-        return mText;
+    private ArticleRepository mRepository = ArticleRepository.getInstance();
+
+    public NotificationsViewModel() {
+        mAllArticles = mRepository.getAllArticles();
     }
+
+    public LiveData<List<Article>> getAllArticles() {
+        return mAllArticles;
+    }
+
+    void insert(Article article) {
+        mRepository.insert(article);
+    }
+
 }
