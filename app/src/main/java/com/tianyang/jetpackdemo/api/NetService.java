@@ -8,7 +8,7 @@ import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 
-public interface NetApi {
+public interface NetService {
     @GET("/article/list/{page}/json")
     Observable<BaseResponse<PageData<Article>>> getArticles(@Path("page") String page);
 }

@@ -1,6 +1,5 @@
 package com.tianyang.jetpackdemo.ui.dashboard;
 
-import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -17,7 +16,6 @@ import com.tianyang.jetpackdemo.model.Article;
 public class DashboardFragment extends PageFragment<Article, DashboardViewModel, FragmentDashboardBinding> {
 
 
-
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_dashboard;
@@ -25,7 +23,6 @@ public class DashboardFragment extends PageFragment<Article, DashboardViewModel,
 
     @Override
     protected void initDetailView() {
-        mBinding.setViewModel(mViewModel);
     }
 
     @Override
@@ -50,7 +47,6 @@ public class DashboardFragment extends PageFragment<Article, DashboardViewModel,
 
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-        Log.d("http", "onRefresh...");
         mViewModel.getDataSource().invalidate();
     }
 

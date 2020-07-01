@@ -2,13 +2,20 @@ package com.tianyang.jetpackdemo.ui.home;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
-public class HomeViewModel extends ViewModel {
+import com.tianyang.jetpackdemo.base.BaseViewModel;
+
+public class HomeViewModel extends BaseViewModel {
 
     MutableLiveData<String> email = new MutableLiveData<>("aa");
     MutableLiveData<String> password = new MutableLiveData<>();
-    MutableLiveData<String> text = new MutableLiveData<>();
+    MutableLiveData<String> text = new MutableLiveData<>("");
+
+    public HomeViewModel() {
+
+    }
 
     public LiveData<String> getText() {
         return text;
@@ -22,9 +29,6 @@ public class HomeViewModel extends ViewModel {
         return password;
     }
 
-    public HomeViewModel() {
-        text.setValue("");
-    }
 
     public void loginDataChanged() {
         text.setValue(email.getValue() + " " + password.getValue());

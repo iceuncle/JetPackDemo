@@ -1,6 +1,5 @@
 package com.tianyang.jetpackdemo.ui.dashboard;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +9,8 @@ import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.tianyang.jetpackdemo.model.Article;
 import com.tianyang.jetpackdemo.databinding.ItemArticleBinding;
+import com.tianyang.jetpackdemo.model.Article;
 
 /**
  * 界面描述：
@@ -24,13 +23,11 @@ public class ArticleAdapter extends PagedListAdapter<Article, ArticleAdapter.Vie
         super(new DiffUtil.ItemCallback<Article>() {
             @Override
             public boolean areItemsTheSame(@NonNull Article oldItem, @NonNull Article newItem) {
-                Log.d("http", "areItemsTheSame..." + (oldItem.id == newItem.id));
                 return oldItem.id == newItem.id;
             }
 
             @Override
             public boolean areContentsTheSame(@NonNull Article oldItem, @NonNull Article newItem) {
-                Log.d("http", "areContentsTheSame..." + (oldItem.equals(newItem)));
                 return oldItem.equals(newItem);
             }
         });

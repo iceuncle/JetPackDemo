@@ -1,11 +1,8 @@
 package com.tianyang.jetpackdemo.base;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 import androidx.paging.DataSource;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
@@ -15,7 +12,7 @@ import androidx.paging.PagedList;
  * <p>
  * Created by tianyang on 2020/6/30.
  */
-public abstract class PageViewModel<T> extends ViewModel {
+public abstract class PageViewModel<T> extends BaseViewModel {
     protected PagedList.Config config;
     private DataSource<Integer, T> dataSource;
     private LiveData<PagedList<T>> pageData;
@@ -58,21 +55,18 @@ public abstract class PageViewModel<T> extends ViewModel {
         @Override
         public void onZeroItemsLoaded() {
             //新提交的PagedList中没有数据
-            Log.d("http", "onZeroItemsLoaded....");
             boundaryPageData.postValue(false);
         }
 
         @Override
         public void onItemAtFrontLoaded(@NonNull T itemAtFront) {
             //新提交的PagedList中第一条数据被加载到列表上
-            Log.d("http", "onItemAtFrontLoaded....");
             boundaryPageData.postValue(true);
         }
 
         @Override
         public void onItemAtEndLoaded(@NonNull T itemAtEnd) {
             //新提交的PagedList中最后一条数据被加载到列表上
-            Log.d("http", "onItemAtEndLoaded....");
         }
     };
 

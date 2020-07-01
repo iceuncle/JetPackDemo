@@ -1,6 +1,5 @@
 package com.tianyang.jetpackdemo.base;
 
-import android.util.Log;
 import android.view.View;
 
 import androidx.databinding.ViewDataBinding;
@@ -23,12 +22,11 @@ import java.lang.reflect.Type;
  * Created by tianyang on 2020/6/30.
  */
 public abstract class PageFragment<T, M extends PageViewModel<T>, VB extends ViewDataBinding>
-        extends BaseFragment<VB> implements OnRefreshListener {
+        extends BaseFragment<M, VB> implements OnRefreshListener {
 
     protected RecyclerView mRecyclerView;
     protected SmartRefreshLayout mRefreshLayout;
     protected View mEmptyView;
-    protected M mViewModel;
     protected PagedListAdapter<T, RecyclerView.ViewHolder> adapter;
 
     @Override
@@ -81,7 +79,6 @@ public abstract class PageFragment<T, M extends PageViewModel<T>, VB extends Vie
 
 
     public void submitList(PagedList<T> result) {
-        Log.d("http", "result...size" + result.size());
         adapter.submitList(result);
     }
 
@@ -95,7 +92,6 @@ public abstract class PageFragment<T, M extends PageViewModel<T>, VB extends Vie
 
         PagedList<T> currentList = adapter.getCurrentList();
         hasData = hasData || currentList != null && currentList.size() > 0;
-        Log.d("http", "hasData..." + hasData);
         if (hasData) {
             mEmptyView.setVisibility(View.GONE);
         } else {

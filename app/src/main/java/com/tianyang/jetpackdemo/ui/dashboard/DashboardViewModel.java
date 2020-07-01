@@ -1,14 +1,14 @@
 package com.tianyang.jetpackdemo.ui.dashboard;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.paging.DataSource;
 import androidx.paging.ItemKeyedDataSource;
 import androidx.paging.PageKeyedDataSource;
 
-import com.tianyang.jetpackdemo.api.NetApi;
+import com.tianyang.jetpackdemo.api.BaseObserver;
 import com.tianyang.jetpackdemo.api.NetClient;
+import com.tianyang.jetpackdemo.api.NetService;
+import com.tianyang.jetpackdemo.api.repository.NetRepository;
 import com.tianyang.jetpackdemo.base.PageViewModel;
 import com.tianyang.jetpackdemo.model.Article;
 import com.tianyang.jetpackdemo.model.BaseResponse;
@@ -16,10 +16,9 @@ import com.tianyang.jetpackdemo.model.PageData;
 
 import java.util.Collections;
 
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
-
 public class DashboardViewModel extends PageViewModel<Article> {
+
+    private NetRepository netRepository = NetRepository.getInstance();
 
 
     @Override
@@ -49,21 +48,10 @@ public class DashboardViewModel extends PageViewModel<Article> {
 
     private void loadData(int page, PageKeyedDataSource.LoadInitialCallback<Integer, Article> initialCallback,
                           PageKeyedDataSource.LoadCallback<Integer, Article> callback) {
-        Log.d("http", "page..." + page);
-        NetClient.create(NetApi.class)
-                .getArticles(String.valueOf(page))
-                .subscribe(new Observer<BaseResponse<PageData<Article>>>() {
+        netRepository.getArticles(page)
+                .subscribe(new BaseObserver<BaseResponse<PageData<Article>>>() {
                     @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(BaseResponse<PageData<Article>> pageDataBaseResponse) {
-//                        if (page == 0) {
-//                            //模拟第一次加载没有数据
-//                            pageDataBaseResponse.data.datas = new ArrayList<>();
-//                        }
+                    public void onSuccess(BaseResponse<PageData<Article>> pageDataBaseResponse) {
                         if (initialCallback != null) {
                             initialCallback.onResult(pageDataBaseResponse.data.datas, -1, 0);
                         } else {
@@ -75,15 +63,12 @@ public class DashboardViewModel extends PageViewModel<Article> {
                     }
 
                     @Override
-                    public void onError(Throwable e) {
+                    public void onFailure(Throwable e) {
+                        failData.postValue(e);
                         postBoundaryPageData(false);
                     }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
                 });
+
     }
 
 
@@ -116,28 +101,21 @@ public class DashboardViewModel extends PageViewModel<Article> {
 
     //feeds流
     private void loadData(int page, int pageSize, ItemKeyedDataSource.LoadCallback<Article> callback) {
-        Log.d("http", "page..." + page);
-        NetClient.create(NetApi.class)
+        NetClient.create(NetService.class)
                 .getArticles(String.valueOf(page))
-                .subscribe(new Observer<BaseResponse<PageData<Article>>>() {
+                .subscribe(new BaseObserver<BaseResponse<PageData<Article>>>() {
                     @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(BaseResponse<PageData<Article>> pageDataBaseResponse) {
+                    public void onSuccess(BaseResponse<PageData<Article>> pageDataBaseResponse) {
                         callback.onResult(pageDataBaseResponse.data.datas);
+                        if (page > 0) {
+                            postBoundaryPageData(pageDataBaseResponse.data.datas.size() > 0);
+                        }
                     }
 
                     @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
+                    public void onFailure(Throwable e) {
+                        failData.postValue(e);
+                        postBoundaryPageData(false);
                     }
                 });
     }
