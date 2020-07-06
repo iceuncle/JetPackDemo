@@ -1,9 +1,7 @@
 package com.tianyang.jetpackdemo.ui.home;
 
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.util.Log;
 
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.tianyang.jetpackdemo.R;
@@ -44,7 +42,11 @@ public class HomeFragment extends BaseFragment<HomeViewModel, FragmentHomeBindin
 //        mBinding.username.addTextChangedListener(afterTextChangedListener);
 //        mBinding.password.addTextChangedListener(afterTextChangedListener);
 
-        mViewModel.email.observe(this, s -> mViewModel.loginDataChanged());
+
+//        mViewModel.email.observe(this, s -> mViewModel.loginDataChanged());
+        mViewModel.mapEmail.observe(this, s -> mViewModel.loginDataChanged());
         mViewModel.password.observe(this, s -> mViewModel.loginDataChanged());
+
+        mViewModel.enableLogin.observe(this, bol -> Log.d("HomeFragment", "enable " + bol));
     }
 }
