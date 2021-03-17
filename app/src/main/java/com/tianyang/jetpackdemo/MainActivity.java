@@ -1,5 +1,8 @@
 package com.tianyang.jetpackdemo;
 
+import android.os.Looper;
+import android.view.MotionEvent;
+
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -25,4 +28,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
         NavigationUI.setupWithNavController(mBinding.navView, navController);
     }
 
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        return super.dispatchTouchEvent(ev);
+    }
 }

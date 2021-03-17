@@ -26,7 +26,7 @@ public abstract class PageViewModel<T> extends BaseViewModel {
                 .setInitialLoadSizeHint(22)
 //                .setMaxSize(100)
 //                .setEnablePlaceholders(false)
-//                .setPrefetchDistance(10)
+                .setPrefetchDistance(3)
                 .build();
         pageData = new LivePagedListBuilder<>(factory, config)
                 .setInitialLoadKey(0)

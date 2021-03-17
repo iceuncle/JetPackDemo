@@ -5,7 +5,10 @@ import androidx.databinding.BaseObservable;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Article extends BaseObservable implements Serializable {
+public class ArticleBean extends BaseObservable implements Serializable {
+
+    public static final String KEY_AUTHOR = "author";
+    public static final String KEY_TITLE = "title";
 
     public int id;
     public String author;
@@ -15,7 +18,7 @@ public class Article extends BaseObservable implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Article article = (Article) o;
+        ArticleBean article = (ArticleBean) o;
         return id == article.id &&
                 Objects.equals(author, article.author) &&
                 Objects.equals(title, article.title);

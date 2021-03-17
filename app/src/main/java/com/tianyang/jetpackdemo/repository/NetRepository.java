@@ -2,7 +2,7 @@ package com.tianyang.jetpackdemo.repository;
 
 import com.tianyang.jetpackdemo.api.NetClient;
 import com.tianyang.jetpackdemo.api.NetService;
-import com.tianyang.jetpackdemo.model.Article;
+import com.tianyang.jetpackdemo.model.ArticleBean;
 import com.tianyang.jetpackdemo.model.BaseResponse;
 import com.tianyang.jetpackdemo.model.PageData;
 
@@ -30,7 +30,7 @@ public class NetRepository {
         return instance;
     }
 
-    public Observable<BaseResponse<PageData<Article>>> getArticles(int page) {
+    public Observable<BaseResponse<PageData<ArticleBean>>> getArticles(int page) {
         return netService.getArticles(String.valueOf(page));
     }
 

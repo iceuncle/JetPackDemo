@@ -11,9 +11,9 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.tianyang.jetpackdemo.R;
 import com.tianyang.jetpackdemo.base.PageFragment;
 import com.tianyang.jetpackdemo.databinding.FragmentDashboardBinding;
-import com.tianyang.jetpackdemo.model.Article;
+import com.tianyang.jetpackdemo.model.ArticleBean;
 
-public class DashboardFragment extends PageFragment<Article, DashboardViewModel, FragmentDashboardBinding> {
+public class DashboardFragment extends PageFragment<ArticleBean, DashboardViewModel, FragmentDashboardBinding> {
 
 
     @Override
